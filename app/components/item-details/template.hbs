@@ -1,0 +1,139 @@
+{{#ivy-tabs selection=selection as |tabs|}}
+  {{#tabs.tablist class="nav nav-pills nav-justified" id="basic-tablist" tagName="ul" as |tablist|}}
+    <li class="{{if (eq selection "DETAILS") "active"}}" role="presentation">
+      {{#tablist.tab "DETAILS" id="basic-tab-a" on-select=(action (mut selection))}} {{t 'itemDetails.header.details' }} {{/tablist.tab}}
+    </li>
+    <li class="{{if (eq selection "USE") "active"}}" role="presentation">
+      {{#tablist.tab "USE" id="basic-tab-b" on-select=(action (mut selection))}} {{t 'itemDetails.header.useCredits' }} {{/tablist.tab}}
+    </li>
+    <li class="{{if (eq selection "TAGS") "active"}}" role="presentation">
+      {{#tablist.tab "TAGS" id="basic-tab-c" on-select=(action (mut selection))}}{{t 'itemDetails.header.tags' }}{{/tablist.tab}}
+    </li>
+    <li class="{{if (eq selection "SETTINGS") "active"}}" role="presentation">
+      {{#tablist.tab "SETTINGS" id="basic-tab-d" on-select=(action (mut selection))}}{{t 'itemDetails.header.settings' }}{{/tablist.tab}}
+    </li>
+    <li class="{{if (eq selection "PROFILE") "active"}}" role="presentation">
+      {{#tablist.tab "PROFILE" id="basic-tab-e" on-select=(action (mut selection))}}{{t 'itemDetails.header.profile' }}{{/tablist.tab}}
+    </li>
+  {{/tabs.tablist}}
+
+  <div class="tab-content item-details-container container">
+    {{#tabs.tabpanel "DETAILS" class="tab-pane" id="basic-panel-a"}}
+
+      {{#each detailsGroup as |detail| }}
+        <div class="row item-detail">
+          <div class="col-xs-1 score-graphic {{if (score-helper detail.score detail.maxScore) 'score-graphic-pass' 'score-graphic-fail'}}"> {{detail.score}} / {{detail.maxScore}} </div>
+          <div class="col-xs-5">{{detail.label}}</div>
+        </div>
+        <div class="row item-detail-messages">
+        {{#each detail.messages as |detailMessage| }}
+          <div class="col-xs-12">{{detailMessage.error}}</div>
+        {{/each}}
+        </div>
+      {{/each}}
+
+    {{/tabs.tabpanel}}
+
+    {{#tabs.tabpanel "USE" class="tab-pane" id="basic-panel-b"}}
+     {{#each useGroup as |detail| }}
+        <div class="row item-detail">
+          <div class="col-xs-1 score-graphic {{if (score-helper detail.score detail.maxScore) 'score-graphic-pass' 'score-graphic-fail'}}"> {{detail.score}} / {{detail.maxScore}} </div>
+          <div class="col-xs-5">{{detail.label}}</div>
+        </div>
+        <div class="row item-detail-messages">
+        {{#each detail.messages as |detailMessage| }}
+          <div class="col-xs-12">{{detailMessage.error}}</div>
+        {{/each}}
+        </div>
+      {{/each}}
+    {{/tabs.tabpanel}}
+
+    {{#tabs.tabpanel "TAGS" class="tab-pane" id="basic-panel-c"}}
+     {{#each tagsGroup as |detail| }}
+        <div class="row item-detail">
+          <div class="col-xs-1 score-graphic {{if (score-helper detail.score detail.maxScore) 'score-graphic-pass' 'score-graphic-fail'}}"> {{detail.score}} / {{detail.maxScore}} </div>
+          <div class="col-xs-5">{{detail.label}}</div>
+        </div>
+        <div class="row item-detail-messages">
+        {{#each detail.messages as |detailMessage| }}
+          <div class="col-xs-12">{{detailMessage.error}}</div>
+        {{/each}}
+        </div>
+      {{/each}}
+    {{/tabs.tabpanel}}
+
+    {{#tabs.tabpanel "SETTINGS" class="tab-pane" id="basic-panel-d"}}
+       {{#each settingsGroup as |detail| }}
+        <div class="row item-detail">
+          <div class="col-xs-1 score-graphic {{if (score-helper detail.score detail.maxScore) 'score-graphic-pass' 'score-graphic-fail'}}"> {{detail.score}} / {{detail.maxScore}} </div>
+          <div class="col-xs-5">{{detail.label}}</div>
+        </div>
+        <div class="row item-detail-messages">
+        {{#each detail.messages as |detailMessage| }}
+          <div class="col-xs-12">{{detailMessage.error}}</div>
+        {{/each}}
+        </div>
+      {{/each}}
+    {{/tabs.tabpanel}}
+
+    {{#tabs.tabpanel "PROFILE" class="tab-pane" id="basic-panel-e"}}
+       {{#each profileGroup as |detail| }}
+        <div class="row item-detail">
+          <div class="col-xs-1 score-graphic {{if (score-helper detail.score detail.maxScore) 'score-graphic-pass' 'score-graphic-fail'}}"> {{detail.score}} / {{detail.maxScore}} </div>
+          <div class="col-xs-5">{{detail.label}}</div>
+        </div>
+        <div class="row item-detail-messages">
+        {{#each detail.messages as |detailMessage| }}
+          <div class="col-xs-12">{{detailMessage.error}}</div>
+        {{/each}}
+        </div>
+      {{/each}}
+    {{/tabs.tabpanel}}
+
+  </div>
+{{/ivy-tabs}}
+
+  <div class="text-center">
+    <button {{action 'showNotesModal' }} class="btn btn-default">Send Notes</button>
+    <!-- <div class="btn-group item-status-dd">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Set Status <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li {{action 'sendSetStatus' 'Reviewing'}}><a href="#"><span class="item-status-reviewing">Reviewing</span></a></li>
+        <li {{action 'sendSetStatus' 'Pending'}}><a href="#"><span class="item-status-pending">Pending</span></a></li>
+        <li {{action 'sendSetStatus' 'Accepted'}}><a href="#"><span class="item-status-accepted">Accepted</span></a></li>
+        <li {{action 'sendSetStatus' 'Rejected'}}><a href="#"><span class="item-status-rejected">Rejected</span></a></li>
+      </ul>
+    </div> -->
+    {{item-status-select model=model}}
+  </div>
+
+  {{#ember-wormhole to="sendNotesDestination"}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name" value="{{currentReceipient}}">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/ember-wormhole}}

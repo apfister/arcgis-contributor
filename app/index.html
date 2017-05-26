@@ -3,14 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ArcgisContributor</title>
+    <title>ArcGIS Contributor</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script>
+      if(window.localStorage){
+        var chk = window.localStorage.getItem('__torii_request');
+        if(chk){
+          window.localStorage.removeItem('__torii_request');
+        }
+      }
+    </script>
 
     {{content-for "head"}}
 
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/arcgis-contributor.css">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 
     {{content-for "head-footer"}}
   </head>

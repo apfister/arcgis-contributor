@@ -4,8 +4,22 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'arcgis-contributor',
     environment: environment,
-    rootURL: '/',
+    rootURL: '/arcgis-contributor/',
     locationType: 'auto',
+
+    torii: {
+      sessionServiceName: 'session',
+      providers: {
+        'arcgis-oauth-bearer': {
+          apiKey: 'arcgisonline',
+          portalUrl: 'https://www.arcgis.com',
+          remoteServiceName: 'iframe',
+          display: 'iframe',
+          showSocialLogins: false
+        }
+      }
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -20,6 +34,18 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      // Here you can pass flags/options to your application instance
+      // when it is created
+      portalBaseUrl: 'https://www.arcgis.com',
+      arcgisPortal: {
+        domain: 'arcgis.com',
+        env: 'www',
+        maps: 'maps'
+      },
+
+      promoter: {
+        auditServiceUrl: '//services3.arcgis.com/7pxWboj3YvCWYdcm/arcgis/rest/services/SDG_PROMOTER_AUDIT/FeatureServer/0'
+      }
     }
   };
 
@@ -43,7 +69,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.rootURL = '/arcgis-contributor/';
+    ENV.locationType = 'hash';
   }
 
   return ENV;
